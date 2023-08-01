@@ -1,0 +1,100 @@
+name: '[CI/CD] Go'
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'cmd/**'
+      - 'internal/**'
+      - 'pkg/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'cmd/**'
+      - 'internal/**'
+      - 'pkg/**'
+
+# Remove all permissions by default
+permissions: {}
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
+
+      - name: Get changed src code
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          dir_names: "true"
+          dir_names_max_depth: "2"
+          files: |
+            cmd/**
+            internal/**
+            pkg/**
+
+      - name: Build
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            go build -v ./${dir}/...
+          done
+
+      - name: Test
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            go test -v ./${dir}/...
+          done
+
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
+
+      - name: Get changed src code
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          dir_names: "true"
+          dir_names_max_depth: "2"
+          files: |
+            cmd/**
+            internal/**
+            pkg/**
+
+      - name: Format
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          exit_code=0
+          for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [ "$(gofmt -s -l ./${dir} | wc -l)" -gt 0 ]; then
+              exit_code=1
+            fi
+          done
+          exit $exit_code
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3.3.1
+        with:
+          args: "--out-${NO_FUTURE}format colored-line-number"
+          only-new-issues: true
+          skip-cache: true
+          skip-build-cache: true
+          version: latest

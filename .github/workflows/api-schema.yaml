@@ -1,0 +1,40 @@
+name: '[CI/CD] Validate examples with JSON Schema'
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'examples/*/secrets.json'
+
+# Remove all permissions by default
+permissions: {}
+jobs:
+  schema-validation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+
+      - name: Setup check-jsonschema
+        run: pip install check-jsonschema
+
+      - name: Get changed src code
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          dir_names: "true"
+          dir_names_max_depth: "2"
+          files: |
+            examples/**
+
+      - name: Validate JSON schema
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            check-jsonschema --schemafile api/secrets.schema.json ./${dir}/secrets.json
+          done
