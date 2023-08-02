@@ -3,7 +3,7 @@ name: '[CI/CD] Validate examples with JSON Schema'
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - 'examples/*/config.json'
 
