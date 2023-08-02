@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+report.xml
 
 # Project-local vscode config
 .vscode/
@@ -22,3 +23,6 @@ cmd/sealed-secrets-updater/sealed-secrets-updater
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Example output directories
+examples/*/manifests
