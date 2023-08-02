@@ -45,9 +45,7 @@ jobs:
       - name: Build
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            go build -v ./${dir}/...
-          done
+          go build -v ./cmd/sealed-secrets-updater/...
 
       - name: Test
         if: steps.changed-files.outputs.any_changed == 'true'
