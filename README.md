@@ -76,4 +76,4 @@ You can find some basic examples in the [examples](./examples) directory.
 
 ## Tutorials
 
-Please refer to the [tutorials](./docs/tutorials) directory for some tutorials on how to use Sealed Secrets Updater with other tools such as ArgoCD, GitHub Actions, etc.
+Please refer to the [tutorials](./docs/tutorials/index.md) directory for some tutorials on how to use Sealed Secrets Updater with other tools such as ArgoCD, GitHub Actions, etc.
