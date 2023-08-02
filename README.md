@@ -56,7 +56,7 @@ Sealed Secrets Updater uses a configuration file (JSON format) to determine how 
       "input": {
         "type": "file",
         "config": {
-          "path": "path/to/my-secret.json"
+          "path": "path/to/my-secret-inputs.json"
         }
       },
       "output": {
