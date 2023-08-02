@@ -1,7 +1,28 @@
 {
   "secrets": [
     {
-      "name": "my-secret",
+      "name": "one-secret",
+      "namespace": "default",
+      "metadata": {
+        "annotations": {
+          "a-custom-annotation": "a-custom-annotation-value"
+        }
+      },
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "examples/file/secrets/one-secret.json"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "examples/file/manifests/one-sealed-secret.json"
+        }
+      }
+    },
+    {
+      "name": "another-secret",
       "namespace": "default",
       "metadata": {
         "labels": {
@@ -11,13 +32,13 @@
       "input": {
         "type": "file",
         "config": {
-          "path": "examples/file/secrets/my-secret.json"
+          "path": "examples/file/secrets/another-secret.json"
         }
       },
       "output": {
         "type": "file",
         "config": {
-          "path": "examples/file/manifests/my-sealed-secret.json"
+          "path": "examples/file/manifests/another-sealed-secret.json"
         }
       }
     }
