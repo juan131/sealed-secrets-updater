@@ -17,9 +17,9 @@
 
 ## Supported Secrets Managers
 
-Currently **only local secrets are supported**, but we plan to add support for secrets managers in the future such as Vault, AWS Secrets Manager, etc.
+Currently **only input secrets files are supported**, but we plan to add support for secrets managers in the future such as Vault, AWS Secrets Manager, etc.
 
-> Note: It is highly recommended to encrypt your local secrets using [git-crypt](https://github.com/AGWA/git-crypt) or similar tools.
+> Note: It is highly recommended to encrypt your input secrets files using [git-crypt](https://github.com/AGWA/git-crypt) or similar tools.
 
 ## Installation
 
@@ -70,7 +70,10 @@ Sealed Secrets Updater uses a configuration file (JSON format) to determine how 
 }
 ```
 
-You can find some basic examples in the [examples](./examples) directory.
+You can find some basic examples in the [examples](./examples) directory to learn how to configure Sealed Secrets Updater to update your manifests using different output types. Please note only two output types are supported at the moment:
+
+- `apply`: Directly apply the new Sealed Secrets to your cluster.
+- `file`: Save the new Sealed Secrets to a file.
 
 > Note: Refer to the [JSON Schema](./api/secrets.schema.json) for the full list of available options.
 
