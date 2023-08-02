@@ -7,6 +7,12 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Supported Secrets Managers](#supported-secrets-managers)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Tutorials](#tutorials)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Supported Secrets Managers
@@ -67,3 +73,7 @@ Sealed Secrets Updater uses a configuration file (JSON format) to determine how 
 You can find some basic examples in the [examples](./examples) directory.
 
 > Note: Refer to the [JSON Schema](./api/secrets.schema.json) for the full list of available options.
+
+## Tutorials
+
+Please refer to the [tutorials](./docs/tutorials) directory for some tutorials on how to use Sealed Secrets Updater with other tools such as ArgoCD, GitHub Actions, etc.
