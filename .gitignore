@@ -19,7 +19,7 @@ report.xml
 dist/
 
 # Local binaries
-cmd/sealed-secrets-updater/sealed-secrets-updater
+sealed-secrets-updater
 
 # Dependency directories (remove the comment below to include it)
 # vendor/

@@ -3,9 +3,9 @@ name: '[CI/CD] Validate examples with JSON Schema'
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
-      - 'examples/*/secrets.json'
+      - 'examples/*/config.json'
 
 # Remove all permissions by default
 permissions: {}
@@ -36,5 +36,5 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            check-jsonschema --schemafile api/secrets.schema.json ./${dir}/secrets.json
+            check-jsonschema --schemafile api/secrets.schema.json ./${dir}/config.json
           done

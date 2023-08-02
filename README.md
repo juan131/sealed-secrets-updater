@@ -21,4 +21,49 @@ TODO
 
 ## Usage
 
-TODO
+Basic usage:
+
+```bash
+sealed-secrets-updater update --config config.json
+```
+
+Run the command below to see the rest available commands:
+
+```bash
+sealed-secrets-updater help
+```
+
+## Configuration
+
+Sealed Secrets Updater uses a configuration file (JSON format) to determine how to update your manifests such as the ones below:
+
+```json
+{
+  "kubesealConfig": {
+    "controllerNamespace": "kube-system",
+    "controllerName": "sealed-secrets-controller"
+  },
+  "secrets": [
+    {
+      "name": "my-secret",
+      "namespace": "default",
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "path/to/my-secret.json"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "path/to/my-sealed-secret.json"
+        }
+      }
+    }
+  ]
+}
+```
+
+You can find some basic examples in the [examples](./examples) directory.
+
+> Note: Refer to the [JSON Schema](./api/secrets.schema.json) for the full list of available options.
