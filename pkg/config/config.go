@@ -33,6 +33,12 @@ func New(path string) (*Config, error) {
 		}
 	}
 
+	for _, secret := range config.Secrets {
+		if secret.Metadata == nil {
+			secret.Metadata = &Metadata{}
+		}
+	}
+
 	return &config, nil
 }
 
