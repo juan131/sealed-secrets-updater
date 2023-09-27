@@ -44,7 +44,7 @@ jobs:
           version: v1.21.2
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       # Build & Publish multi-arch image
       - name: Login to Docker Hub
