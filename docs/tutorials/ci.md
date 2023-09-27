@@ -49,14 +49,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup git-crypt
         run: sudo apt-get install -y git-crypt
 
       - name: Setup Sealed Secrets Updater
         run: |
-          TODO
+          latest_release_name="$(curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/juan131/sealed-secrets-updater/releases | jq -r "map(select(.prerelease == false)) | .[0].name")"
+          latest_version="${latest_release_name#"sealed-secrets-updater-v"}"
+          curl -sL "https://github.com/juan131/sealed-secrets-updater/releases/download/v${latest_version}/sealed-secrets-updater-${latest_version}-linux-amd64.tar.gz" | tar -xz sealed-secrets-updater
+          mv sealed-secrets-updater /usr/local/bin/sealed-secrets-updater
+          chmod +x /usr/local/bin/sealed-secrets-updater
     
       - name: Unlock secrets inputs
         run: |
