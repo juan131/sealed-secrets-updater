@@ -23,7 +23,15 @@ Currently **only input secrets files are supported**, but we plan to add support
 
 ## Installation
 
-TODO
+You can download the corresponding binary for every supported version from [releases section](https://github.com/juan131/sealed-secrets-updater/releases). Alternatively, you can use the following commands to install the latest version (assuming linux/amd64):
+
+```bash
+latest_release_name="$(curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/juan131/sealed-secrets-updater/releases | jq -r "map(select(.prerelease == false)) | .[0].name")"
+latest_version="${latest_release_name#"sealed-secrets-updater-v"}"
+curl -sL "https://github.comjuan131/sealed-secrets-updater/releases/download/v${latest_version}/sealed-secrets-updater-${latest_version}-linux-amd64.tar.gz" | tar -xz sealed-secrets-updater
+mv sealed-secrets-updater /usr/local/bin/sealed-secrets-updater
+chmod +x /usr/local/bin/sealed-secrets-updater
+```
 
 ## Usage
 
