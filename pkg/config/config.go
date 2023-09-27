@@ -3,7 +3,13 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
+	"io"
+	"net/url"
 	"os"
+
+	"github.com/bitnami-labs/sealed-secrets/pkg/kubeseal"
+	"k8s.io/klog/v2"
 )
 
 // New returns a new Config
@@ -44,8 +50,18 @@ func New(path string) (*Config, error) {
 
 // Validate validates the config
 func (c *Config) Validate() error {
-	if c == nil {
+	if c == nil || c.KubesealConfig == nil {
 		return errors.New("no config defined")
+	}
+
+	if c.KubesealConfig.Certificate != "" {
+		if c.KubesealConfig.ControllerName != "" || c.KubesealConfig.ControllerNamespace != "" {
+			klog.Warning("controller name and namespace will be ignored since a certificate was provided")
+		}
+
+		if err := isValidCertificate(c.KubesealConfig.Certificate); err != nil {
+			return fmt.Errorf("invalid certificate: %w", err)
+		}
 	}
 
 	if len(c.Secrets) == 0 {
@@ -63,6 +79,31 @@ func (c *Config) Validate() error {
 		if err := secret.Output.Validate(); err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+// isValidCertificate checks if a certificate is valid
+func isValidCertificate(filenameOrURI string) error {
+	var certFile io.ReadCloser
+	if _, err := os.Stat(filenameOrURI); err != nil {
+		if _, err := url.ParseRequestURI(filenameOrURI); err != nil {
+			return err
+		}
+
+		// TODO: download certificate from URI
+		return nil
+	} else {
+		certFile, err = os.Open(filenameOrURI)
+		if err != nil {
+			return err
+		}
+	}
+
+	defer certFile.Close()
+	if _, err := kubeseal.ParseKey(certFile); err != nil {
+		return err
 	}
 
 	return nil
