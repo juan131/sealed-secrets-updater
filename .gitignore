@@ -15,8 +15,9 @@ report.xml
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# GoReleaser output dir
+# Output dir
 dist/
+out/
 
 # Local binaries
 sealed-secrets-updater
