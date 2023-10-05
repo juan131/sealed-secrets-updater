@@ -53,14 +53,6 @@ jobs:
 
       - name: Setup git-crypt
         run: sudo apt-get install -y git-crypt
-
-      - name: Setup Sealed Secrets Updater
-        run: |
-          latest_release_name="$(curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/juan131/sealed-secrets-updater/releases | jq -r "map(select(.prerelease == false)) | .[0].name")"
-          latest_version="${latest_release_name#"sealed-secrets-updater-v"}"
-          curl -sL "https://github.com/juan131/sealed-secrets-updater/releases/download/v${latest_version}/sealed-secrets-updater-${latest_version}-linux-amd64.tar.gz" | tar -xz sealed-secrets-updater
-          mv sealed-secrets-updater /usr/local/bin/sealed-secrets-updater
-          chmod +x /usr/local/bin/sealed-secrets-updater
     
       - name: Unlock secrets inputs
         run: |
@@ -80,8 +72,9 @@ jobs:
           location: us-central1-a
 
       - name: Update the Sealed Secrets manifests
-        run: |
-          sealed-secrets-updater update --config sealed-secrets-updater.json
+        uses: juan131/sealed-secrets-updater-action@v0
+        with:
+          config_path: 'sealed-secrets-updater.json'
 
       - name: Commit
         uses: EndBug/add-and-commit@v7.2.0
