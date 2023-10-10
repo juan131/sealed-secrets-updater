@@ -36,6 +36,12 @@ func (c *FileConfig) UpdateSealedSecret(
 			return nil
 		}
 	}
+	// Create parent directory if it doesn't exist
+	if _, err := os.Stat(path.Dir(c.getFilePath())); os.IsNotExist(err) {
+		if err := os.MkdirAll(path.Dir(c.getFilePath()), 0755); err != nil {
+			return err
+		}
+	}
 	output, err := os.OpenFile(c.getFilePath(), os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return err
