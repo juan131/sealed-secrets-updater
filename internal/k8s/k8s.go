@@ -1,7 +1,6 @@
 package k8s
 
 import (
-	b64 "encoding/base64"
 	"os"
 
 	corev1 "k8s.io/api/core/v1"
@@ -38,7 +37,7 @@ func NewSecret(metadata metav1.ObjectMeta, data map[string]string) *corev1.Secre
 func encodeSecretData(data map[string]string) map[string][]byte {
 	encodedData := map[string][]byte{}
 	for k, v := range data {
-		encodedData[k] = []byte(b64.StdEncoding.EncodeToString([]byte(v)))
+		encodedData[k] = []byte(v)
 	}
 
 	return encodedData
