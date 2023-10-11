@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"path"
+
+	"gopkg.in/yaml.v2"
 )
 
 // FileConfig represents the configuration for using a file as secret input
@@ -21,11 +23,27 @@ func (c *FileConfig) GetSecretsData() (map[string]string, error) {
 	defer inputFile.Close()
 
 	var secretsData map[string]string
-	if err := json.NewDecoder(inputFile).Decode(&secretsData); err != nil {
-		return nil, err
+	switch c.getFormat() {
+	case "yaml":
+		if err := yaml.NewDecoder(inputFile).Decode(&secretsData); err != nil {
+			return nil, err
+		}
+	default:
+		if err := json.NewDecoder(inputFile).Decode(&secretsData); err != nil {
+			return nil, err
+		}
 	}
 
 	return secretsData, nil
+}
+
+// getFormat returns the sealed secret format based on the file extension
+func (c *FileConfig) getFormat() string {
+	if ext := path.Ext(c.Path); ext == ".yaml" || ext == ".yml" {
+		return "yaml"
+	}
+
+	return "json"
 }
 
 // getFilePath returns the input file path
