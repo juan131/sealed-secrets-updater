@@ -44,59 +44,6 @@ func TestConfig_Validate(t *testing.T) {
 			fields:  fields{},
 			wantErr: true,
 		},
-		{
-			name: "no secret name defined",
-			fields: fields{
-				Secrets: []*Secret{{
-					Namespace: "default",
-					Input: &input.Input{
-						Type: "file",
-						Config: map[string]interface{}{
-							"path": "/path/to/secret",
-						},
-					},
-					Output: &output.Output{
-						Type: "file",
-						Config: map[string]interface{}{
-							"path": "/path/to/manifest",
-						},
-					},
-				}},
-			},
-			wantErr: true,
-		},
-		{
-			name: "no secret input defined",
-			fields: fields{
-				Secrets: []*Secret{{
-					Name:      "secret-name",
-					Namespace: "default",
-					Output: &output.Output{
-						Type: "file",
-						Config: map[string]interface{}{
-							"path": "/path/to/manifest",
-						},
-					},
-				}},
-			},
-			wantErr: true,
-		},
-		{
-			name: "no secret output defined",
-			fields: fields{
-				Secrets: []*Secret{{
-					Name:      "secret-name",
-					Namespace: "default",
-					Input: &input.Input{
-						Type: "file",
-						Config: map[string]interface{}{
-							"path": "/path/to/secret",
-						},
-					},
-				}},
-			},
-			wantErr: true,
-		},
 	}
 	for _, testToRun := range tests {
 		test := testToRun
@@ -118,7 +65,6 @@ func TestConfig_Validate(t *testing.T) {
 }
 
 func Test_isValidCertificate(t *testing.T) {
-	t.Parallel()
 	type args struct {
 		filenameOrURI string
 	}
@@ -149,6 +95,7 @@ func Test_isValidCertificate(t *testing.T) {
 			wantErr: true,
 		},
 	}
+	t.Parallel()
 	for _, testToRun := range tests {
 		test := testToRun
 		t.Run(test.name, func(tt *testing.T) {

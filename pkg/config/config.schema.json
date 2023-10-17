@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kubesealConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controllerName": {
+          "description": "Sealed Secrets controller name",
+          "type": "string",
+          "default": "sealed-secrets-controller"
+        },
+        "controllerNamespace": {
+          "description": "Sealed Secrets controller namespace",
+          "type": "string",
+          "default": "kube-system"
+        },
+        "certificate": {
+          "description": "Certificate / public key file / URL to use for encryption",
+          "type": "string"
+        }
+      }
+    },
+    "secrets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Sealed Secret name",
+            "type": "string"
+          },
+          "namespace": {
+            "description": "Sealed Secret namespace scope",
+            "type": "string"
+          },
+          "input": {
+            "description": "Secrets input",
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "Input type",
+                "type": "string",
+                "enum": [
+                  "file"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "if": {
+              "properties": { "type": { "const": "file" } }
+            },
+            "then": {
+              "properties": {
+                "config": {
+                  "description": "Input configuration",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "description": "Path to input secrets file",
+                      "type": "string"
+                    },
+                    "relative": {
+                      "description": "Consider path as relative to current working directory",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              "required": [
+                "config"
+              ]
+            }
+          },
+          "output": {
+            "description": "Output",
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "Output type",
+                "type": "string",
+                "enum": [
+                  "apply",
+                  "file"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": { "type": { "const": "apply" } }
+                },
+                "then": {
+                  "properties": {
+                    "config": {
+                      "description": "Output configuration",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "createOnly": {
+                          "description": "Create output file only if it does not exist",
+                          "type": "boolean",
+                          "default": false
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": { "type": { "const": "file" } }
+                },
+                "then": {
+                  "properties": {
+                    "config": {
+                      "description": "Output configuration",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "path": {
+                          "description": "Path to output sealed secret manifest",
+                          "type": "string"
+                        },
+                        "relative": {
+                          "description": "Consider path as relative to current working directory",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "createOnly": {
+                          "description": "Create output file only if it does not exist",
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "config"
+                  ]
+                }
+              }
+            ],
+            "required": [
+              "type"
+            ]
+          },
+          "metadata": {
+            "description": "Metadata",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "labels": {
+                "description": "Secret labels",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "annotations": {
+                "description": "Secret annotations",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "namespace",
+          "input",
+          "output"
+        ]
+      }
+    }
+  }
+}
