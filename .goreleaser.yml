@@ -35,6 +35,6 @@ release:
   footer: |
     ## Release Notes
 
-    Please read the [RELEASE_NOTES](https://github.com/juan131/sealed-secrets-updater/blob/main/RELEASE-NOTES.md) which contain among other things important information for who is upgrading from previous releases.
+    Please read the [RELEASE_NOTES](https://github.com/juan131/sealed-secrets-updater/blob/main/RELEASE_NOTES.md) which contain among other things important information for who is upgrading from previous releases.
 
     ## Thanks!
