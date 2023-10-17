@@ -1,6 +1,6 @@
 # Using Sealed Secrets Updater with ArgoCD
 
-> Note: This tutorial assumes that you have previously completed the [previous tutorial](./ci.md).
+> Note: This tutorial assumes that you have previously completed the [previous tutorial](ci.md).
 
 Once we have a CI pipeline that updates the Sealed Secrets manifests when a change is made in the secrets inputs, we can use ArgoCD to deploy them in the cluster and completing our GitOps CI/CD flow.
 
@@ -8,7 +8,7 @@ Once we have a CI pipeline that updates the Sealed Secrets manifests when a chan
 
 ### Scenario
 
-This tutorial starts from the scenario we left after completing the [previous tutorial](./ci.md).
+This tutorial starts from the scenario we left after completing the [previous tutorial](ci.md).
 
 ### Installing ArgoCD in the cluster
 

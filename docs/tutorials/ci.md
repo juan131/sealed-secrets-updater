@@ -1,6 +1,6 @@
 # Using Sealed Secrets Updater in your CI pipeline
 
-> Note: This tutorial assumes that you are familiar with encrypted inputs using `git-crypt`. If you are not, please read [this tutorial](./git-crypt.md) first.
+> Note: This tutorial assumes that you are familiar with encrypted inputs using `git-crypt`. If you are not, please read [this tutorial](git-crypt.md) first.
 
 Sealed Secrets Updater can be used in your CI pipeline to update the Sealed Secrets manifests when a change is made in the secrets inputs. This way, you don't need to worry anymore about Sealed Secrets manifests and exclusively focus on the secrets inputs.
 
@@ -16,7 +16,7 @@ Sealed Secrets Updater can be used in your CI pipeline to update the Sealed Secr
 
 ### Scenario
 
-This tutorial starts from the scenario we left after completing the [previous tutorial](./git-crypt.md).
+This tutorial starts from the scenario we left after completing the [previous tutorial](git-crypt.md).
 
 ### Adding a GPG key to GitHub Encrypted Secrets
 
@@ -89,4 +89,4 @@ Now, every time a PR is created attempting to change the secrets inputs, a GitHu
 
 ### Next steps
 
-- [Using Sealed Secrets Updater with ArgoCD](./argocd.md)
+- [Using Sealed Secrets Updater with ArgoCD](argocd.md)

@@ -78,13 +78,13 @@ Sealed Secrets Updater uses a configuration file (JSON format) to determine how 
 }
 ```
 
-You can find some basic examples in the [examples](./examples) directory to learn how to configure Sealed Secrets Updater to update your manifests using different output types. Please note only two output types are supported at the moment:
+You can find some basic examples in the [examples](examples) directory to learn how to configure Sealed Secrets Updater to update your manifests using different output types. Please note only two output types are supported at the moment:
 
 - `apply`: Directly apply the new Sealed Secrets to your cluster.
 - `file`: Save the new Sealed Secrets to a file.
 
-> Note: Refer to the [JSON Schema](./pkg/config/config.schema.json) for the full list of available options.
+> Note: Refer to the [JSON Schema](pkg/config/config.schema.json) for the full list of available options.
 
 ## Tutorials
 
-Please refer to the [tutorials](./docs/tutorials/index.md) directory for some tutorials on how to use Sealed Secrets Updater with other tools such as ArgoCD, GitHub Actions, etc.
+Please refer to the [tutorials](docs/tutorials/index.md) directory for some tutorials on how to use Sealed Secrets Updater with other tools such as ArgoCD, GitHub Actions, etc.

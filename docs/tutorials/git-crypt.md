@@ -126,4 +126,4 @@ Both the secrets inputs and the Sealed Secrets manifests are now encrypted and c
 
 ### Next steps
 
-- [Using Sealed Secrets Updater in a CI pipeline](./ci.md)
+- [Using Sealed Secrets Updater in a CI pipeline](ci.md)
