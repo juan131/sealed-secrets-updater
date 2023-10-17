@@ -1,0 +1,19 @@
+{
+  "secrets": [
+    {
+      "name": "one-secret",
+      "namespace": "default",
+      "metadata": {
+        "annotations": {
+          "a-custom-annotation": "a-custom-annotation-value"
+        }
+      },
+      "output": {
+        "type": "file",
+        "config": {
+          "path": "path/to/manifests/one-sealed-secret.json"
+        }
+      }
+    }
+  ]
+}

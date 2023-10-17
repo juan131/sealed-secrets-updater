@@ -12,8 +12,13 @@ import (
 	"k8s.io/klog/v2"
 )
 
-// New returns a new Config
+// New returns a new Config given a path to a config file
 func New(path string) (*Config, error) {
+	// Ensure config follows the schema before loading it
+	if err := validSchema(path); err != nil {
+		return nil, err
+	}
+
 	configFile, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -48,7 +53,7 @@ func New(path string) (*Config, error) {
 	return &config, nil
 }
 
-// Validate validates the config
+// Validate validates the config with extra validations that are not covered by the JSON schema
 func (c *Config) Validate() error {
 	if c == nil || c.KubesealConfig == nil {
 		return errors.New("no config defined")
@@ -66,19 +71,6 @@ func (c *Config) Validate() error {
 
 	if len(c.Secrets) == 0 {
 		return errors.New("no secrets defined")
-	}
-
-	for _, secret := range c.Secrets {
-		if secret.Name == "" {
-			return errors.New("no secret name defined")
-		}
-		if err := secret.Input.Validate(); err != nil {
-			return err
-		}
-
-		if err := secret.Output.Validate(); err != nil {
-			return err
-		}
 	}
 
 	return nil

@@ -1,0 +1,19 @@
+{
+  "secrets": [
+    {
+      "name": "one-secret",
+      "namespace": "default",
+      "metadata": {
+        "annotations": {
+          "a-custom-annotation": "a-custom-annotation-value"
+        }
+      },
+      "input": {
+        "type": "file",
+        "config": {
+          "path": "path/to/secrets/one-secret-inputs.json"
+        }
+      }
+    }
+  ]
+}

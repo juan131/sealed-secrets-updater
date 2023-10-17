@@ -36,5 +36,5 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for dir in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            check-jsonschema --schemafile api/secrets.schema.json ./${dir}/config.json
+            check-jsonschema --schemafile pkg/config/config.schema.json ./${dir}/config.json
           done

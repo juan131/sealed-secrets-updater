@@ -83,7 +83,7 @@ You can find some basic examples in the [examples](./examples) directory to lear
 - `apply`: Directly apply the new Sealed Secrets to your cluster.
 - `file`: Save the new Sealed Secrets to a file.
 
-> Note: Refer to the [JSON Schema](./api/secrets.schema.json) for the full list of available options.
+> Note: Refer to the [JSON Schema](./pkg/config/config.schema.json) for the full list of available options.
 
 ## Tutorials
 
