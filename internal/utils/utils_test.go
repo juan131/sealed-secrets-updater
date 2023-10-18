@@ -30,7 +30,6 @@ type jsonSubStruct struct {
 }
 
 func Test_MapStringInterfaceToStruct(t *testing.T) {
-	t.Parallel()
 	type args struct {
 		m map[string]interface{}
 		s interface{}
@@ -92,6 +91,7 @@ func Test_MapStringInterfaceToStruct(t *testing.T) {
 			wantErr: false,
 		},
 	}
+	t.Parallel()
 	for _, testToRun := range tests {
 		test := testToRun
 		t.Run(test.name, func(tt *testing.T) {
@@ -107,7 +107,6 @@ func Test_MapStringInterfaceToStruct(t *testing.T) {
 }
 
 func TestStructToMapStringInterface(t *testing.T) {
-	t.Parallel()
 	type args struct {
 		s interface{}
 	}
@@ -163,6 +162,7 @@ func TestStructToMapStringInterface(t *testing.T) {
 			wantErr: false,
 		},
 	}
+	t.Parallel()
 	for _, testToRun := range tests {
 		test := testToRun
 		t.Run(test.name, func(tt *testing.T) {
@@ -174,6 +174,45 @@ func TestStructToMapStringInterface(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, test.want) {
 				tt.Errorf("StructToMapStringInterface() = %v, want %v", got, test.want)
+			}
+		})
+	}
+}
+
+func TestStringSliceContains(t *testing.T) {
+	type args struct {
+		s []string
+		e string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "Successful search",
+			args: args{
+				s: []string{"one", "two", "three"},
+				e: "two",
+			},
+			want: true,
+		},
+		{
+			name: "Unsuccessful search",
+			args: args{
+				s: []string{"one", "two", "three"},
+				e: "four",
+			},
+			want: false,
+		},
+	}
+	t.Parallel()
+	for _, testToRun := range tests {
+		test := testToRun
+		t.Run(test.name, func(tt *testing.T) {
+			tt.Parallel()
+			if got := StringSliceContains(test.args.s, test.args.e); got != test.want {
+				tt.Errorf("StringSliceContains() = %v, want %v", got, test.want)
 			}
 		})
 	}

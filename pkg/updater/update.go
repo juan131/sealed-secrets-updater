@@ -18,7 +18,7 @@ import (
 
 // UpdateSealedSecrets iterates over all the secrets in the secrets manager and
 // updates the sealed secrets manifests
-func UpdateSealedSecrets(ctx context.Context, config *config.Config) error {
+func UpdateSealedSecrets(ctx context.Context, config *config.Config, skipSecrets []string) error {
 	k8sConfig := k8s.NewClientConfig()
 	klog.Info("Obtaining public key...")
 	pubKey, err := getPublicKey(ctx, k8sConfig, config.KubesealConfig)
@@ -28,6 +28,11 @@ func UpdateSealedSecrets(ctx context.Context, config *config.Config) error {
 
 	klog.Info("Updating sealed secrets...")
 	for _, secret := range config.Secrets {
+		if utils.StringSliceContains(skipSecrets, secret.Name) {
+			klog.Infof("=> Skipping sealed secret \"%s\"", secret.Name)
+			continue
+		}
+
 		klog.Infof("=> Updating sealed secret \"%s\"", secret.Name)
 		var secretsData map[string]string
 		switch secret.Input.Type {
