@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"os"
 	"path"
+	"strings"
 
 	ssv1alpha1 "github.com/bitnami-labs/sealed-secrets/pkg/apis/sealedsecrets/v1alpha1"
 	"github.com/bitnami-labs/sealed-secrets/pkg/kubeseal"
@@ -65,11 +66,12 @@ func (c *FileConfig) UpdateSealedSecret(
 
 // getFormat returns the sealed secret format based on the file extension
 func (c *FileConfig) getFormat() string {
-	if ext := path.Ext(c.Path); ext == ".yaml" || ext == ".yml" {
+	switch strings.ToLower(path.Ext(c.Path)) {
+	case ".yaml", ".yml":
 		return "yaml"
+	default:
+		return "json"
 	}
-
-	return "json"
 }
 
 // getFilePath returns the output file path
