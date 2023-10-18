@@ -6,7 +6,7 @@ builds:
     id: sealed-secrets-updater
     main: ./cmd/sealed-secrets-updater
     ldflags:
-      - -X main.VERSION={{ .Version }}
+      - -X main.Version={{ .Version }}
     targets:
       - darwin_amd64
       - darwin_arm64
