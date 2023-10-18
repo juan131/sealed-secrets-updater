@@ -43,3 +43,13 @@ func StructToMapStringInterface(s interface{}) (map[string]interface{}, error) {
 
 	return mapVal, nil
 }
+
+// StringSliceContains is a helper function to detect whether a string slice contains a string or not
+func StringSliceContains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}

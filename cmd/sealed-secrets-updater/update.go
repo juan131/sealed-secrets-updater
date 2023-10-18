@@ -10,6 +10,8 @@ import (
 	"github.com/juan131/sealed-secrets-updater/pkg/updater"
 )
 
+var skipSecrets []string
+
 // newCmdUpdate creates a command object for the "update" action.
 func newCmdUpdate() *cobra.Command {
 	cmd := &cobra.Command{
@@ -28,7 +30,7 @@ func newCmdUpdate() *cobra.Command {
 				return fmt.Errorf("invalid config: %w", err)
 			}
 
-			if err := updater.UpdateSealedSecrets(context.Background(), config); err != nil {
+			if err := updater.UpdateSealedSecrets(context.Background(), config, skipSecrets); err != nil {
 				return fmt.Errorf("unable to update sealed secrets: %w", err)
 			}
 
@@ -37,6 +39,8 @@ func newCmdUpdate() *cobra.Command {
 		SilenceErrors: true,
 		SilenceUsage:  true,
 	}
+
+	cmd.Flags().StringSliceVar(&skipSecrets, "skip-secrets", []string{}, "List of secrets to skip updating")
 
 	return cmd
 }
