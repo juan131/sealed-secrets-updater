@@ -18,7 +18,11 @@ import (
 
 // UpdateSealedSecrets iterates over all the secrets in the secrets manager and
 // updates the sealed secrets manifests
-func UpdateSealedSecrets(ctx context.Context, config *config.Config, skipSecrets []string) error {
+func UpdateSealedSecrets(ctx context.Context, config *config.Config, filter Filter) error {
+	if err := filter.Validate(config.Secrets); err != nil {
+		return err
+	}
+
 	k8sConfig := k8s.NewClientConfig()
 	klog.Info("Obtaining public key...")
 	pubKey, err := getPublicKey(ctx, k8sConfig, config.KubesealConfig)
@@ -28,7 +32,8 @@ func UpdateSealedSecrets(ctx context.Context, config *config.Config, skipSecrets
 
 	klog.Info("Updating sealed secrets...")
 	for _, secret := range config.Secrets {
-		if utils.StringSliceContains(skipSecrets, secret.Name) {
+		if !utils.StringSliceContains(filter.OnlySecrets, secret.Name) ||
+			utils.StringSliceContains(filter.SkipSecrets, secret.Name) {
 			klog.Infof("=> Skipping sealed secret \"%s\"", secret.Name)
 			continue
 		}
@@ -38,8 +43,7 @@ func UpdateSealedSecrets(ctx context.Context, config *config.Config, skipSecrets
 		switch secret.Input.Type {
 		case input.TypeFile:
 			var fileConfig input.FileConfig
-			err := utils.MapStringInterfaceToStruct(secret.Input.Config, &fileConfig)
-			if err != nil {
+			if err := utils.MapStringInterfaceToStruct(secret.Input.Config, &fileConfig); err != nil {
 				return err
 			}
 

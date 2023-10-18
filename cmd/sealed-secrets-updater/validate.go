@@ -35,5 +35,11 @@ func newCmdValidate() *cobra.Command {
 		SilenceUsage:  true,
 	}
 
+	// Flags common to all sub commands
+	cmd.PersistentFlags().StringVar(&configPath, "config", "", "Path to config file")
+	if err := cmd.MarkPersistentFlagRequired("config"); err != nil {
+		klog.Fatal(err)
+	}
+
 	return cmd
 }

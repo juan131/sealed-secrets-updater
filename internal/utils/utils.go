@@ -53,3 +53,15 @@ func StringSliceContains(s []string, e string) bool {
 	}
 	return false
 }
+
+// StringSliceContainsAll is a helper function to detect whether a string slice contains all elements of a second string slice
+func StringSliceContainsAll(s []string, ref []string) bool {
+	allContained := true
+	for _, a := range s {
+		if !StringSliceContains(ref, a) {
+			allContained = false
+			break
+		}
+	}
+	return allContained
+}

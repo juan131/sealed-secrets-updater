@@ -217,3 +217,42 @@ func TestStringSliceContains(t *testing.T) {
 		})
 	}
 }
+
+func TestStringSliceContainsAll(t *testing.T) {
+	type args struct {
+		s   []string
+		ref []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "Successful search",
+			args: args{
+				s:   []string{"one", "two"},
+				ref: []string{"one", "two", "three"},
+			},
+			want: true,
+		},
+		{
+			name: "Unsuccessful search",
+			args: args{
+				s:   []string{"one", "four"},
+				ref: []string{"one", "two", "three"},
+			},
+			want: false,
+		},
+	}
+	t.Parallel()
+	for _, testToRun := range tests {
+		test := testToRun
+		t.Run(test.name, func(tt *testing.T) {
+			tt.Parallel()
+			if got := StringSliceContainsAll(test.args.s, test.args.ref); got != test.want {
+				tt.Errorf("StringSliceContainsAll() = %v, want %v", got, test.want)
+			}
+		})
+	}
+}
