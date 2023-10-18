@@ -4,6 +4,11 @@ Latest release:
 
 [![](https://img.shields.io/github/release/juan131/sealed-secrets-updater.svg)](https://github.com/juan131/sealed-secrets-updater/releases/latest)
 
+## v0.4.0
+
+- Feat: add support for updating only provided secrets
+- Feat: add support for version subcommand
+
 ## v0.3.0
 
 - Feat: add support for skipping certain secrets
