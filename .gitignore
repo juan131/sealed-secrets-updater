@@ -19,9 +19,6 @@ report.xml
 dist/
 out/
 
-# Local binaries
-sealed-secrets-updater
-
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
