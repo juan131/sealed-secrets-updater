@@ -4,6 +4,11 @@ Latest release:
 
 [![](https://img.shields.io/github/release/juan131/sealed-secrets-updater.svg)](https://github.com/juan131/sealed-secrets-updater/releases/latest)
 
+## v0.3.0
+
+- Feat: add support for skipping certain secrets
+- Feat: add support for secrets inputs in CSV
+
 ## v0.2.0
 
 - Chore: (deps) bump golang.org/x/net
