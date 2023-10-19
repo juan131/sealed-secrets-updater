@@ -32,7 +32,7 @@ func UpdateSealedSecrets(ctx context.Context, config *config.Config, filter Filt
 
 	klog.Info("Updating sealed secrets...")
 	for _, secret := range config.Secrets {
-		if !utils.StringSliceContains(filter.OnlySecrets, secret.Name) ||
+		if ((len(filter.OnlySecrets) > 0) && !utils.StringSliceContains(filter.OnlySecrets, secret.Name)) ||
 			utils.StringSliceContains(filter.SkipSecrets, secret.Name) {
 			klog.Infof("=> Skipping sealed secret \"%s\"", secret.Name)
 			continue
