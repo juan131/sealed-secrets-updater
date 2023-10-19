@@ -6,7 +6,7 @@ Latest release:
 
 ## v0.4.1
 
-- Fix: filter conditions when `--only-secrets` flag is not provided
+- Fix: filter conditions when `--only-secrets` flag is not provided (all secrets are skipped)
 
 ## v0.4.0
 
