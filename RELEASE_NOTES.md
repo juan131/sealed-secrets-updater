@@ -4,6 +4,10 @@ Latest release:
 
 [![](https://img.shields.io/github/release/juan131/sealed-secrets-updater.svg)](https://github.com/juan131/sealed-secrets-updater/releases/latest)
 
+## v0.4.1
+
+- Fix: filter conditions when `--only-secrets` flag is not provided
+
 ## v0.4.0
 
 - Feat: add support for updating only provided secrets
